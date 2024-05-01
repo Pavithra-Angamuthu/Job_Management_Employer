@@ -84,7 +84,7 @@ function Dashboard() {
             id="input-with-icon-textfield"
             variant="outlined"
             size="small"
-            placeholder="Filter"
+            placeholder="Filter by Job Title"
             onChange={(e) => {
               setSearchName(e.target.value);
             }}

@@ -15,6 +15,7 @@ function ViewApplicationDetails(props) {
                 <Typography gutterBottom variant="h6" component="div">
                   {item.jobopenings.job_title}
                 </Typography>
+                <div className="h-0.5 bg-slate-300 my-3"></div>
                 <Typography variant="body2" color="text.secondary">
                   <span className="font-bold">Name :</span> {item.name}
                 </Typography>

@@ -8,12 +8,16 @@ import EmployerConfigAPI from "../../Service/employer";
 import { Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../../Redux/Auth/action";
+import { IconButton, InputAdornment } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch =useDispatch();
+  const dispatch = useDispatch();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const initialState = {
     business_email: "",
@@ -21,6 +25,12 @@ function Login() {
   };
 
   const SignUpDetails = { ...initialState };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const validationSchema = Yup.object().shape({
     business_email: Yup.string()
@@ -35,25 +45,24 @@ function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-        let payload= {
-            ...values,
-            password: btoa(values?.password)
+      let payload = {
+        ...values,
+        password: btoa(values?.password),
+      };
+      try {
+        const response = await EmployerConfigAPI.loginEmployer(payload);
+        if (response.data.status) {
+          dispatch(AuthActions.login(response.data.data));
+          navigate("/employer/dashboard");
+        } else {
+          setSnackBarOpen(true);
+          setError(response.data.message);
         }
-        try{
-      const response = await EmployerConfigAPI.loginEmployer(payload);
-      if (response.data.status) {
-       
-        dispatch(AuthActions.login(response.data.data));
-        navigate("/employer/dashboard");
-      } else {
-        setSnackBarOpen(true);
-        setError(response.data.message);
-      }
-    }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
         setSnackBarOpen(true);
         setError(err.message);
-    }
+      }
     },
   });
 
@@ -91,6 +100,25 @@ function Login() {
                 label="Password"
                 variant="outlined"
                 size="small"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 value={formik?.values?.password}
                 onChange={(e) => {
                   formik.setFieldValue("password", e.target.value);
@@ -133,7 +161,9 @@ function Login() {
       <Snackbar
         open={snackBarOpen}
         autoHideDuration={5000}
-        onClose={()=>{setSnackBarOpen(false)}}
+        onClose={() => {
+          setSnackBarOpen(false);
+        }}
         message={error}
       />
     </React.Fragment>
