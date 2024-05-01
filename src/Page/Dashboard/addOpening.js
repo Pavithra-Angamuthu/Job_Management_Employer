@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { Option as BaseOption, Option, optionClasses } from "@mui/base/Option";
 import JobOpeningConfigAPI from "../../Service/jobopening";
 import { useSelector } from "react-redux";
+import { department, experience, location } from "./const";
 
 function AddOpening(props) {
   const { title } = props;
@@ -43,30 +44,7 @@ function AddOpening(props) {
     job_description: "",
   };
 
-  const department = [
-    {
-      department: "Engineering",
-      specialization: ["Development", "Quality Assurance", "Business Analysis"],
-    },
-    {
-      department: "Human Resources",
-      specialization: ["Recruitment", "Employee relations"],
-    },
-    { department: "Marketing", specialization: ["Digital Marketing", "SEO"] },
-    { department: "Accounting & Finance", specialization: "" },
-  ];
 
-  const location = ["Chennai", "Coimbatore", "Erode"];
-
-  const experience = [
-    "fresher",
-    "< 1 year",
-    "< 2 years",
-    "< 3years",
-    "< 4 years",
-    "< 5 years",
-    "> 5 years",
-  ];
 
   const opeingDetails = props.isEdit
     ? { ...props.selectJob }
@@ -85,7 +63,7 @@ function AddOpening(props) {
   const validationSchema = Yup.object().shape({
     job_title: Yup.string()
       .required("Job Title is required")
-      .min(10, "Job Title must be at least 10 characters")
+      .min(6, "Job Title must be at least 6 characters")
       .max(40, "Job Title cannot exceed 40 characters"),
     department: Yup.string().required("Department is required"),
     specialization: Yup.string().required("Specialization is required"),
@@ -93,8 +71,8 @@ function AddOpening(props) {
     skills: Yup.string().required("Skills is required"),
     job_description: Yup.string()
       .required("Job Description  is required")
-      .min(50, "Job Title must be at least 50 characters")
-      .max(2000, "Job Title cannot exceed 40 characters"),
+      .min(50, "Job description must be at least 50 characters")
+      .max(2000, "Job description cannot exceed 40 characters"),
   });
 
   function reset(){
