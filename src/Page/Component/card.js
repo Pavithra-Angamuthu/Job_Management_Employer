@@ -15,7 +15,9 @@ function CardDetails(props) {
                 <Typography gutterBottom variant="h6" component="div">
                   {item.job_title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary"style={{
+    overflow: 'hidden',
+   }}>
                   {item.job_description}
                 </Typography>
               </CardContent>

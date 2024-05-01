@@ -8,11 +8,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = await localStorage.getItem("access_token");
+    const token = await localStorage.getItem('persist:root');
 
-    if (token) {
-      console.log("token", token);
-      config.headers.Authorization = `Bearer ${token}`;
+    if (JSON.parse( JSON.parse(token).auth).details.token) {
+      config.headers.Authorization = `${JSON.parse( JSON.parse(token).auth).details.token}`;
     }
     // You can add headers, authentication tokens, etc. here
     return config;
