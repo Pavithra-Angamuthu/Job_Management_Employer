@@ -1,9 +1,18 @@
-import { Get, Post } from "../axios";
+import { Get, Patch, Post } from "../axios";
 let BASE_URL_Opening= "opening";
 const JobOpeningConfigAPI = {
   createOpening: async (payload) => {
     try {
       const res = await Post(`${BASE_URL_Opening}/`, payload);
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateOpening: async (payload) => {
+    try {
+      const res = await Patch(`${BASE_URL_Opening}/`, payload);
       return res;
     } catch (error) {
       throw error;

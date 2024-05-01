@@ -10,9 +10,10 @@ import { useSelector } from "react-redux";
 function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
-  const {details }  = useSelector((state) => state.auth);
+  const { details } = useSelector((state) => state.auth);
   const [openingList, setOpeningList] = useState([]);
-  console.log("-->> details : ", details)
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectJob, setSelectJob] = useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,24 +29,32 @@ function Dashboard() {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerClose = (status="close") => {
+  
+    setIsEdit(false);
+    setSelectJob({})
+    if(status === "close"){
+        setOpen(false);
+    }
   };
 
-  async function getOpeningBasedOnEmp(){
-    await JobOpeningConfigAPI.getOpeningsBasedOnEmp({emp_id: details._id}).then(res=>{
-        console.log(res)
-        setOpeningList(res.data.data)
-    })
+  async function getOpeningBasedOnEmp() {
+    await JobOpeningConfigAPI.getOpeningsBasedOnEmp({
+      emp_id: details._id,
+    }).then((res) => {
+      console.log(res);
+      setOpeningList(res.data.data);
+    });
   }
 
-  useEffect(()=>{
-    getOpeningBasedOnEmp()
-  },[]);
+  useEffect(() => {
+    getOpeningBasedOnEmp();
+  }, [open]);
 
   return (
-    <React.Fragment>
-        <div className=" text-left text-l font-bold pt-5" >Job Openings </div>
+    <React.Fragment >
+        <div className="h-full bg-slate-50">
+      <div className="text-left text-l font-bold pt-5">Job Openings </div>
       <div className="flex justify-between pb-5 pt-8">
         <TextField
           id="input-with-icon-textfield"
@@ -103,14 +112,23 @@ function Dashboard() {
           }}
         >
           <div className="p-5">
-            <AddOpening 
-            title="Add"
-            close={handleDrawerClose}
-            />
+            <AddOpening title={isEdit?"Edit" :"Add"} close={handleDrawerClose}isEdit={isEdit} setIsEdit={setIsEdit} selectJob={selectJob} setSelectJob={setSelectJob}/>
           </div>
         </Drawer>
       </div>
-      <Card  data={openingList}/>
+      {openingList.length > 0 ? (
+        <Card
+          data={openingList}
+          openDrawer={handleDrawerOpen}
+          setIsEdit={setIsEdit}
+          setSelectJob={setSelectJob}
+          isEdit={isEdit}
+          getOpeningBasedOnEmp={getOpeningBasedOnEmp}
+        />
+      ) : (
+        <div className="h-2/4">No Job Openings Found</div>
+      )}
+      </div>
     </React.Fragment>
   );
 }

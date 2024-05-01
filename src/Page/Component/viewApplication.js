@@ -11,7 +11,7 @@ function ViewApplicationDetails(props) {
       <div className="flex grid grid-cols-3 gap-7">
         {props.data.map((item) => {
           return (
-            <Card sx={{ maxWidth: 345 }} className="text-left">
+            <Card  className="text-left">
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">
                   {item.jobopenings.job_title}

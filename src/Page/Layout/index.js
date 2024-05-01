@@ -4,7 +4,7 @@ import Avatar from '@mui/material/Avatar';
 function Layout({children}) {
     return (
       <React.Fragment >
-        <div className="h-screen bg-slate-50">
+        <div className="h-screen bg-slate-50 overflow-x-hidden">
         <div className="flex flex-row w-screen bg-white px-10 py-4 text-black justify-between">
            <p className="text-2xl text-bold">Employer Portal</p>
            <Avatar sx={{ width: 32, height: 32 }} src="/broken-image.jpg" />

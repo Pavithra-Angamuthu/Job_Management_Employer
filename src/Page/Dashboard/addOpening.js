@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Drawer,
@@ -26,10 +27,11 @@ function AddOpening(props) {
   const [tagInput, setTagInput] = React.useState("");
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [error, setError] = useState("");
-  const {details  }  = useSelector((state) => state.auth);
+  const { details } = useSelector((state) => state.auth);
+  const [saveStatus, setSaveStatus] = useState("");
 
   const initialState = {
-    emp_id: details._id, 
+    emp_id: details._id,
     job_title: "",
     department: "",
     specialization: "",
@@ -39,7 +41,6 @@ function AddOpening(props) {
     keywords: [],
     skills: "",
     job_description: "",
-
   };
 
   const department = [
@@ -67,7 +68,19 @@ function AddOpening(props) {
     "> 5 years",
   ];
 
-  const opeingDetails = { ...initialState };
+  const opeingDetails = props.isEdit
+    ? { ...props.selectJob }
+    : { ...initialState };
+
+  useEffect(() => {
+    if (props.isEdit) {
+      setSelectSpecialization(
+        department.find((data) => data.department === opeingDetails.department)
+          ?.specialization
+      );
+      setTags(opeingDetails.keywords)
+    }
+  }, [props.isEdit]);
 
   const validationSchema = Yup.object().shape({
     job_title: Yup.string()
@@ -84,6 +97,14 @@ function AddOpening(props) {
       .max(2000, "Job Title cannot exceed 40 characters"),
   });
 
+  function reset(){
+    props.setIsEdit(false);
+    props.setSelectJob({});
+    formik.setValues({ ...initialState });
+    setTags([]);
+    setTagInput("")
+  }
+
   const formik = useFormik({
     initialValues: {
       ...opeingDetails,
@@ -92,13 +113,22 @@ function AddOpening(props) {
     onSubmit: async (values) => {
       try {
         let payload = {
-            ...values,
-            keywords: tags
+          ...values,
+          keywords: tags,
+        };
+        let response = {};
+        if (props.isEdit) {
+         response = await JobOpeningConfigAPI.updateOpening(payload);
+        } else {
+            response = await JobOpeningConfigAPI.createOpening(payload);
         }
-        const response = await JobOpeningConfigAPI.createOpening(values);
-        console.log(response.data);
+        console.log(response)
+
         if (response.data.status) {
-          props.close();
+          if (saveStatus === "save") {
+            props.close();
+          }
+          reset()
         } else {
           setSnackBarOpen(true);
           setError(response.data.message);
@@ -336,6 +366,7 @@ function AddOpening(props) {
           variant="contained"
           className="b-0 "
           onClick={() => {
+            setSaveStatus("save");
             formik?.handleSubmit();
           }}
         >
@@ -345,6 +376,7 @@ function AddOpening(props) {
           variant="contained"
           className="b-0 "
           onClick={() => {
+            setSaveStatus("Save and Add Another");
             formik?.handleSubmit();
           }}
         >
