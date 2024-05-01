@@ -53,7 +53,10 @@ function Login() {
         const response = await EmployerConfigAPI.loginEmployer(payload);
         if (response.data.status) {
           dispatch(AuthActions.login(response.data.data));
-          navigate("/employer/dashboard");
+          setTimeout(() => {
+            navigate("/employer/dashboard");
+          }, 1000);
+          
         } else {
           setSnackBarOpen(true);
           setError(response.data.message);

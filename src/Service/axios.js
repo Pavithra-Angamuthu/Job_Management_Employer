@@ -10,7 +10,7 @@ instance.interceptors.request.use(
   async (config) => {
      const token = await localStorage.getItem('persist:root');
 
-    if (JSON.parse( JSON.parse(token).auth).details.token) {
+    if (token && JSON.parse( JSON.parse(token).auth).details.token) {
       config.headers.Authorization = `${JSON.parse( JSON.parse(token).auth).details.token}`;
     }
     // You can add headers, authentication tokens, etc. here
