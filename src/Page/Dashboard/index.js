@@ -45,7 +45,8 @@ function Dashboard() {
 
   return (
     <React.Fragment>
-      <div className="flex justify-between pb-5">
+        <div className=" text-left text-l font-bold pt-5" >Job Openings </div>
+      <div className="flex justify-between pb-5 pt-8">
         <TextField
           id="input-with-icon-textfield"
           variant="outlined"
