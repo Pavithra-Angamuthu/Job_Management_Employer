@@ -41,7 +41,6 @@ function Login() {
         }
         try{
       const response = await EmployerConfigAPI.loginEmployer(payload);
-      console.log(response.data);
       if (response.data.status) {
        
         dispatch(AuthActions.login(response.data.data));

@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 function ViewApplicationDetails(props) {
-  console.log("-> props ", props);
   return (
     <React.Fragment>
       <div className="flex grid grid-cols-3 gap-7">

@@ -9,7 +9,6 @@ function ViewApply() {
 
   async function getOpeningBasedOnOpening(){
     await JobApplyConfigAPI.getJobApplyBasedOnOpening({job_id:  id}).then(res=>{
-        console.log(res)
         setApplicationList(res.data.data)
     })
   }

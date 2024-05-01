@@ -66,13 +66,10 @@ function Dashboard() {
       skip: limit * (page - 1),
       limit: limit,
     }).then((res) => {
-      console.log(res);
       setOpeningList(res.data.data.data);
       setTotalPageCount(res.data.data.count);
     });
   }
-
-  console.log(filter.department);
 
   useEffect(() => {
     getOpeningBasedOnEmp();

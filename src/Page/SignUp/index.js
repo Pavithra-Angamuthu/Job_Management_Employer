@@ -54,7 +54,6 @@ function SignUp() {
         confirm_password: btoa(values?.confirm_password),
       };
       const response = await EmployerConfigAPI.createEmployer(payload);
-      console.log(response.data);
       if (response.data.status) {
         navigate("/login");
       } else {

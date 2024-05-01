@@ -29,7 +29,6 @@ function PagePagination(props) {
           variant="outlined"
           shape="rounded"
           onChange={(_, val) => {
-            console.log("--->>> asd", val);
             props.setPage(val);
           }}
         />

@@ -95,7 +95,6 @@ function AddOpening(props) {
         } else {
             response = await JobOpeningConfigAPI.createOpening(payload);
         }
-        console.log(response)
 
         if (response.data.status) {
           if (saveStatus === "save") {
