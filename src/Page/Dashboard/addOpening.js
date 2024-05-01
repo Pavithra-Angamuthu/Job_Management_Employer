@@ -2,21 +2,16 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Drawer,
   Chip,
   MenuItem,
   Select,
   TextField,
   Checkbox,
   FormControlLabel,
-  TextareaAutosize,
-  Box,
-  Typography,
   Snackbar,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Option as BaseOption, Option, optionClasses } from "@mui/base/Option";
 import JobOpeningConfigAPI from "../../Service/jobopening";
 import { useSelector } from "react-redux";
 import { department, experience, location } from "./const";

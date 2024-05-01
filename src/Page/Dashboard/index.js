@@ -189,7 +189,7 @@ function Dashboard() {
             </FormControl>
 
             <FormControlLabel
-            label="Is Remote"
+            label="Remote"
             control={
               <Checkbox
                 checked={filter.is_remote}

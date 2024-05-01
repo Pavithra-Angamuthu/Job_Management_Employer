@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import EmployerConfigAPI from "../../Service/employer";
 import { Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { AuthActions, login } from "../../Redux/Auth/action";
+import { AuthActions } from "../../Redux/Auth/action";
 
 function Login() {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const baseURL =   "http://localhost:4000/api";
 
@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = await localStorage.getItem('persist:root');
+     const token = await localStorage.getItem('persist:root');
 
     if (JSON.parse( JSON.parse(token).auth).details.token) {
       config.headers.Authorization = `${JSON.parse( JSON.parse(token).auth).details.token}`;
