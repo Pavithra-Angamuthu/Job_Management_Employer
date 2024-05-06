@@ -22,22 +22,13 @@ const JobOpeningConfigAPI = {
   getOpeningsBasedOnEmp: async (payload) => {
     try {
       const res = await Get(
-        `${BASE_URL_Opening}/emp?id=${payload.emp_id}&title=${payload.title}&limit=${payload.limit}&skip=${payload.skip}&department=${payload.department}&specialization=${payload.specialization}&experience=${payload.experience}&location=${payload.location}&is_remote=${payload.is_remote}`
+        `${BASE_URL_Opening}/emp?id=${payload.emp_id}&title=${payload.title}&limit=${payload.limit}&skip=${payload.skip}&department=${payload.department}&specialization=${payload.specialization}&experience=${payload.experience}&location=${payload.location}&is_remote=${payload.is_remote}`, payload.token
       );
       return res;
     } catch (error) {
       throw error;
     }
-  },
-
-  //   loginEmployer: async (payload) => {
-  //     try {
-  //       const res = await Get(`${BASE_URL_Opening}/login?email=${payload.business_email}&password=${payload.password}`);
-  //       return res;
-  //     } catch (error) {
-  //       throw error;
-  //     }
-  //   },
+  }
 };
 
 export default JobOpeningConfigAPI;

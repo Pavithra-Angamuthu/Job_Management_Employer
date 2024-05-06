@@ -1,30 +1,3 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import rootReducer from "./rootReducer";
-
-// export const store = configureStore({
-//   rootReducer
-// });
-
-
-// // export const store = createStore(
-// //   rootReducer,
-// //   composeWithDevTools(applyMiddleware(thunk))
-// // )
-
-// export const persistor = persistStore(store);
-
-// const logger = {
-//   store, persistor
-// };
-
-// export const persistor = persistStore(store);
-
-// const logger = {
-//     store, persistor
-// };
-
-// export default logger;
-
 import {configureStore} from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage'
 import {combineReducers} from "redux"; 

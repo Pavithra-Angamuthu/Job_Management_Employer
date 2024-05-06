@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,12 +8,14 @@ import EmployerConfigAPI from "../../Service/employer";
 import { IconButton, InputAdornment, Snackbar } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useSelector } from "react-redux";
 
 function SignUp() {
   const navigate = useNavigate();
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const {details} = useSelector(state=> state.auth)
 
   const initialState = {
     business_name: "",
@@ -21,6 +23,14 @@ function SignUp() {
     password: "",
     confirm_password: "",
   };
+
+  useEffect(()=>{
+    if(!details.token){
+      navigate("/")
+    }else{
+      navigate("/employer/dashboard")
+    }
+  },[details])
 
   const SignUpDetails = { ...initialState };
 
@@ -123,7 +133,7 @@ function SignUp() {
             <div className="flex flex-col justify-start">
               <TextField
                 id="Password"
-                label="Passwordas"
+                label="Password"
                 variant="outlined"
                 size="small"
                 type={showPassword ? "text" : "password"}

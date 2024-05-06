@@ -23,7 +23,7 @@ function ViewApply() {
         <div className="pt-8">
         {
             applicationList.length> 0?
-            <ViewApplicationDetails  data={applicationList}/> :<div className="h-2/4">No Applucation Found</div>
+            <ViewApplicationDetails  data={applicationList}/> :<div className="h-2/4">No Application Found</div>
         }
    </div>
     

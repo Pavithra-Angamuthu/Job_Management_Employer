@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import EmployerConfigAPI from "../../Service/employer";
 import { Snackbar } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthActions } from "../../Redux/Auth/action";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -18,11 +18,22 @@ function Login() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const {details} = useSelector(state=> state.auth)
 
   const initialState = {
     business_email: "",
     password: "",
   };
+
+  useEffect(()=>{
+    if(!details.token){
+      navigate("/login")
+    }else{
+      setTimeout(()=>{
+      navigate("/employer/dashboard")
+    }, 700)
+    }
+  },[details])
 
   const SignUpDetails = { ...initialState };
 

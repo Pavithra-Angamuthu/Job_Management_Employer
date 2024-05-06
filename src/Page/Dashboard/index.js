@@ -68,6 +68,8 @@ function Dashboard() {
     }).then((res) => {
       setOpeningList(res.data.data.data);
       setTotalPageCount(res.data.data.count);
+    }).catch(err =>{
+      console.log(err)
     });
   }
 
@@ -77,6 +79,9 @@ function Dashboard() {
 
   return (
     <React.Fragment>
+        {!details.token ? (
+        <p className="text-xl">Please sign-in access the portal</p>
+      ) :<>
       <div className="h-full bg-slate-50">
         <div className="text-left text-l font-bold pt-5">Job Openings </div>
         <div className="flex flex-warp justify-between pb-5 pt-8">
@@ -284,6 +289,8 @@ function Dashboard() {
           />
         ) : null}
       </div>
+      </>
+}
     </React.Fragment>
   );
 }
